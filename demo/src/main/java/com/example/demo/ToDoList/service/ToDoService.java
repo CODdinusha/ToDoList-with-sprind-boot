@@ -1,10 +1,9 @@
 package com.example.demo.ToDoList.service;
 
-import com.example.demo.ToDoList.dto.request.ToDoUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.ToDoList.dto.request.ToDoSaveDTO;
 
 public interface ToDoService {
-    static void addToDo(ToDoUpdateDTO toDoUpdateDTO) {
 
-    }
+
+    String addToDo(ToDoSaveDTO toDoSaveDTO);
 }

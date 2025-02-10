@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class ToDoDTO {
-    private Long id;
+    private int id;
     private String title;
     private String description;
     private boolean completed;

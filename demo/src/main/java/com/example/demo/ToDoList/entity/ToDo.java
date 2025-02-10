@@ -2,15 +2,21 @@ package com.example.demo.ToDoList.entity;
 
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
     @Entity
     @Table(name = "todo_items")
     public class ToDo {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+        private int id;
 
         @Column(nullable = false)
         private String title;
