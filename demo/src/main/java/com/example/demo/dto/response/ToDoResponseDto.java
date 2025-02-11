@@ -1,6 +1,5 @@
-package com.example.demo.ToDoList.dto.request;
+package com.example.demo.dto.response;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ToDoSaveDTO {
+public class ToDoResponseDto {
+    private Long id;
     private String title;
     private String description;
-    private boolean completed;
-
+    private String content;
 }

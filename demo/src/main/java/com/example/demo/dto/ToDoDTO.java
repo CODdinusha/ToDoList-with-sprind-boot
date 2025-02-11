@@ -1,9 +1,6 @@
-package com.example.demo.ToDoList.dto;
+package com.example.demo.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +10,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class ToDoDTO {
-    private int id;
+    private Long id;
     private String title;
     private String description;
+    private String content;
     private boolean completed;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }
+
+

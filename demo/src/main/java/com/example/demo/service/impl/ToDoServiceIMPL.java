@@ -1,0 +1,73 @@
+package com.example.demo.service.impl;
+
+
+import com.example.demo.dto.ToDoDTO;
+import com.example.demo.dto.request.ToDoRequestDTO;
+import com.example.demo.dto.request.ToDoupdateRequestDTO;
+import com.example.demo.dto.response.ToDoResponseDto;
+import com.example.demo.entity.ToDo;
+import com.example.demo.mapper.ToDoMapper;
+import com.example.demo.repo.ToDoRepo;
+import com.example.demo.service.ToDoService;
+//import com.example.demo.ToDoList.util.mappers.ToDoMapper;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ToDoServiceIMPL implements ToDoService {
+    @Autowired
+    private ToDoMapper toDoMapper;
+    @Autowired
+    private ToDoRepo toDoRepo;
+    @Autowired
+    private ModelMapper modelMapper;
+
+
+    @Override
+    public String addToDo(ToDoRequestDTO toDoRequestDTO) {
+        ToDo toDo = new ToDo();  // Create an instance of ToDo
+        toDo.setTitle(toDoRequestDTO.getTitle());
+        toDo.setDescription(toDoRequestDTO.getDescription());
+        toDo.setContent(toDoRequestDTO.getContent());
+        toDo.setCompleted(toDoRequestDTO.isCompleted());
+        toDoRepo.save(toDo);
+        return "Task '" + toDo.getTitle() + "' saved successfully!";
+    }
+
+    @Override
+    public List<ToDoDTO> getAllToDo() {
+        List<ToDo> getToDos = toDoRepo.findAll();
+        List<ToDoDTO> toDoDTOList = new ArrayList<>();
+
+        List<ToDoDTO> toDoDTOS = modelMapper.
+                map(getToDos, new TypeToken<List<ToDoDTO>>() {
+                }.getType());
+        return toDoDTOS;
+    }
+
+    @Override
+    public ToDoupdateRequestDTO updateToDo(Long id, ToDoupdateRequestDTO toDoupdateRequestDTO) {
+        Optional<ToDo> toDo = toDoRepo.findById(toDoupdateRequestDTO.getId());
+
+        ToDo toDo1 = toDo.get();
+
+        toDo1.setTitle(toDoupdateRequestDTO.getTitle());
+        toDo1.setDescription(toDoupdateRequestDTO.getDescription());
+        toDo1.setContent(toDoupdateRequestDTO.getContent());
+        toDo1.setCompleted(toDoupdateRequestDTO.isCompleted());
+
+        toDo1.setUpdatedAt(LocalDateTime.now());
+
+        toDoRepo.save(toDo1);
+
+        return +"Updated succesfully";
+    }
+
+}
