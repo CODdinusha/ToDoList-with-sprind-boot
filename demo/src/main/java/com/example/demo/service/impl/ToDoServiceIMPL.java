@@ -15,6 +15,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ public class ToDoServiceIMPL implements ToDoService {
     private ToDoRepo toDoRepo;
     @Autowired
     private ModelMapper modelMapper;
-
 
     @Override
     public String addToDo(ToDoRequestDTO toDoRequestDTO) {
@@ -64,10 +64,23 @@ public class ToDoServiceIMPL implements ToDoService {
         toDo1.setCompleted(toDoupdateRequestDTO.isCompleted());
 
         toDo1.setUpdatedAt(LocalDateTime.now());
-
-        toDoRepo.save(toDo1);
-
-        return +"Updated succesfully";
+        ToDo updatedToDo = toDoRepo.save(toDo1);
+        return modelMapper.map(updatedToDo, ToDoupdateRequestDTO.class);
     }
+
+    @Override
+    public ToDoDTO getById(Long id) {
+        Optional<ToDo> toDo = toDoRepo.findById(id);
+        if ((toDo.isPresent())){
+//            ToDoDTO toDoDTO = modelMapper.map(toDo.get(), ToDoDTO.class);
+            ToDoDTO toDoDTO = toDoMapper.entityToDTO(toDo.get());
+            return toDoDTO;
+        }else {
+            System.out.println("Not Available");
+
+        }
+        return null;
+    }
+
 
 }

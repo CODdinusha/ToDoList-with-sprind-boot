@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/toDo/")
-public class ToDoController  {
+public class ToDoController {
     @Autowired
     private ToDoService toDoService;
 
@@ -26,14 +26,16 @@ public class ToDoController  {
         String result = toDoService.addToDo(toDoRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+
     @GetMapping(
             path = "/todos/all")
 
-    public List<ToDoDTO> getAllToDo(){
+    public List<ToDoDTO> getAllToDo() {
         List<ToDoDTO> allToDo = toDoService.getAllToDo();
         return allToDo;
     }
-//    @PutMapping(path = "/update/{id}")
+
+    //    @PutMapping(path = "/update/{id}")
 //    public String updateToDO(@RequestBody ToDoupdateRequestDTO) {
 //        String updated = toDoService.updateToDO(ToDoupdateRequestDTO);
 //        return updated;
@@ -42,13 +44,16 @@ public class ToDoController  {
     public ResponseEntity<ToDoupdateRequestDTO> updateToDo(@PathVariable Long id, @RequestBody ToDoupdateRequestDTO toDoupdateRequestDTO) {
         ToDoupdateRequestDTO updatedToDo = toDoService.updateToDo(id, toDoupdateRequestDTO);
         return ResponseEntity.ok(updatedToDo);
-
-
     }
 
-
-
-
+    @GetMapping(
+            path = {"/get-by-id"},
+            params = {"id"}
+    )
+    public ResponseEntity<ToDoDTO> getById(@RequestParam(value = "id") Long id) {
+        ToDoDTO getToDo = toDoService.getById(id);
+        return ResponseEntity.ok((ToDoDTO) getToDo);
+    }
 }
 
 
