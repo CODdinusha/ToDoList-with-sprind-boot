@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/toDo/")
 public class ToDoController {
+
     @Autowired
     private ToDoService toDoService;
 
@@ -46,13 +47,10 @@ public class ToDoController {
         return ResponseEntity.ok(updatedToDo);
     }
 
-    @GetMapping(
-            path = {"/get-by-id"},
-            params = {"id"}
-    )
-    public ResponseEntity<ToDoDTO> getById(@RequestParam(value = "id") Long id) {
-        ToDoDTO getToDo = toDoService.getById(id);
-        return ResponseEntity.ok((ToDoDTO) getToDo);
+    @GetMapping("/todos/{id}")
+    public ResponseEntity<ToDoDTO> getToDoById(@PathVariable Long id) {
+        ToDoDTO toDo = toDoService.getToDoById(id);
+        return ResponseEntity.ok(toDo);
     }
 }
 

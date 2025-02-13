@@ -6,10 +6,11 @@ import com.example.demo.dto.request.ToDoRequestDTO;
 import com.example.demo.dto.request.ToDoupdateRequestDTO;
 import com.example.demo.dto.response.ToDoResponseDto;
 import com.example.demo.entity.ToDo;
-import com.example.demo.mapper.ToDoMapper;
+
 import com.example.demo.repo.ToDoRepo;
 import com.example.demo.service.ToDoService;
 //import com.example.demo.ToDoList.util.mappers.ToDoMapper;
+import com.example.demo.util.mapper.ToDoMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,18 +70,14 @@ public class ToDoServiceIMPL implements ToDoService {
     }
 
     @Override
-    public ToDoDTO getById(Long id) {
+    public ToDoDTO getToDoById(Long id) {
         Optional<ToDo> toDo = toDoRepo.findById(id);
-        if ((toDo.isPresent())){
-//            ToDoDTO toDoDTO = modelMapper.map(toDo.get(), ToDoDTO.class);
+        if (toDo.isPresent()) {
             ToDoDTO toDoDTO = toDoMapper.entityToDTO(toDo.get());
             return toDoDTO;
-        }else {
+        }else{
             System.out.println("Not Available");
-
         }
         return null;
     }
-
-
 }
