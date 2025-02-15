@@ -52,6 +52,11 @@ public class ToDoController {
         ToDoDTO toDo = toDoService.getToDoById(id);
         return ResponseEntity.ok(toDo);
     }
+    @PatchMapping("/todos/{id}/complete")
+    public ResponseEntity<ToDoDTO> markToDoAsCompleted(@PathVariable Long id) {
+        ToDoDTO updatedToDo = toDoService.markToDoAsCompleted(id);
+        return ResponseEntity.ok(updatedToDo);
+    }
 }
 
 

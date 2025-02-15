@@ -15,4 +15,6 @@ public interface ToDoService  {
     ToDoupdateRequestDTO updateToDo(Long id, ToDoupdateRequestDTO toDoupdateRequestDTO);
 
     ToDoDTO getToDoById(Long id);
+
+    ToDoDTO markToDoAsCompleted(Long id);
 }

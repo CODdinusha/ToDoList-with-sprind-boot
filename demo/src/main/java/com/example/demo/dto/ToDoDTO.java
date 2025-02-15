@@ -18,6 +18,8 @@ public class ToDoDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public ToDoDTO(Long id, String title, String description, String content, boolean completed) {
+    }
 }
 
 

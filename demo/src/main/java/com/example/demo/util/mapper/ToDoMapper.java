@@ -11,4 +11,6 @@ public interface ToDoMapper {
     ToDoupdateRequestDTO entityToDto(ToDo toDo);
 
     ToDoDTO entityToDTO(ToDo toDo);
+
+    ToDoDTO toDto(ToDo updatedToDo);
 }

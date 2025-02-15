@@ -80,4 +80,15 @@ public class ToDoServiceIMPL implements ToDoService {
         }
         return null;
     }
+    @Override
+    public ToDoDTO markToDoAsCompleted(Long id) {
+        ToDo toDo = toDoRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("ToDo not found with id: " + id));
+
+        toDo.setCompleted(true); // Mark as completed
+        toDo.setUpdatedAt(LocalDateTime.now()); // Update timestamp
+
+        ToDo updatedToDo = toDoRepo.save(toDo);
+        return toDoMapper.toDto(updatedToDo);
+    }
 }
