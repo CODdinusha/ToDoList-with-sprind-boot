@@ -4,8 +4,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.ToDoDTO;
 import com.example.demo.dto.request.ToDoRequestDTO;
 import com.example.demo.dto.request.ToDoupdateRequestDTO;
-import com.example.demo.dto.response.ToDoResponseDto;
-import com.example.demo.repo.ToDoRepo;
 import com.example.demo.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,12 +33,6 @@ public class ToDoController {
         List<ToDoDTO> allToDo = toDoService.getAllToDo();
         return allToDo;
     }
-
-    //    @PutMapping(path = "/update/{id}")
-//    public String updateToDO(@RequestBody ToDoupdateRequestDTO) {
-//        String updated = toDoService.updateToDO(ToDoupdateRequestDTO);
-//        return updated;
-//    }
     @PutMapping("/todos/{id}")
     public ResponseEntity<ToDoupdateRequestDTO> updateToDo(@PathVariable Long id, @RequestBody ToDoupdateRequestDTO toDoupdateRequestDTO) {
         ToDoupdateRequestDTO updatedToDo = toDoService.updateToDo(id, toDoupdateRequestDTO);
@@ -57,6 +49,26 @@ public class ToDoController {
         ToDoDTO updatedToDo = toDoService.markToDoAsCompleted(id);
         return ResponseEntity.ok(updatedToDo);
     }
+    @DeleteMapping(path = "/delete-todo/{id}")
+    public String deleteToDo(@PathVariable("id") long id) {
+
+        return toDoService.deleteToDo(id);
+    }
+    @GetMapping(path = "/complete-todo")
+    public ResponseEntity<List<ToDoDTO>> getCompletedToDo() {
+        List<ToDoDTO> toDoDTOList = toDoService.getToDoByCompleted(true);
+        return ResponseEntity.ok(toDoDTOList);
+    }
+
+    @GetMapping(
+            path = {"/get-by-title"},
+            params = {"title"}
+    )
+    public ResponseEntity<List<ToDoDTO>> getByTitle(@RequestParam(value = "title") String title) throws ClassNotFoundException {
+        List<ToDoDTO> toDoDTOList = toDoService.getToDoByTitle(title);
+        return ResponseEntity.ok(toDoDTOList);
+    }
+
 }
 
 

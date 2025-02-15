@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
     public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "id",nullable = false,unique = true)
         private Long id;
-    @Column(nullable = false)
+    @Column(name = "title",nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(name = "description",nullable = false)
         private String description;
-    @Column(nullable = false)
+    @Column(name = "content",nullable = false)
         private String content;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean completed = false;
 
     @Column(updatable = false)

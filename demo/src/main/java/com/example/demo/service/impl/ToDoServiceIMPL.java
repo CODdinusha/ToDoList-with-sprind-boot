@@ -4,7 +4,6 @@ package com.example.demo.service.impl;
 import com.example.demo.dto.ToDoDTO;
 import com.example.demo.dto.request.ToDoRequestDTO;
 import com.example.demo.dto.request.ToDoupdateRequestDTO;
-import com.example.demo.dto.response.ToDoResponseDto;
 import com.example.demo.entity.ToDo;
 
 import com.example.demo.repo.ToDoRepo;
@@ -16,11 +15,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ToDoServiceIMPL implements ToDoService {
@@ -91,4 +90,43 @@ public class ToDoServiceIMPL implements ToDoService {
         ToDo updatedToDo = toDoRepo.save(toDo);
         return toDoMapper.toDto(updatedToDo);
     }
-}
+
+    @Override
+    public String deleteToDo(long id) {
+        if (toDoRepo.existsById(id)) {
+            toDoRepo.deleteById(id);
+            return "Customer with ID " + id + " has been deleted successfully.";
+        } else {
+            return "Customer with ID " + id + " not found. Cannot delete.";
+        }
+    }
+
+//    @Override
+//    public List<ToDoDTO> getToDoByCompleted(boolean b) {
+//        List<ToDo> toDos = toDoRepo.findAllByCompletedEquals();
+//        return toDoMapper.entityListToDtoList(toDos);
+//    }
+
+    @Override
+    public List<ToDoDTO> getToDoByCompleted(boolean b) {
+        List<ToDo> toDos = toDoRepo.findAllByCompletedEquals(b);
+        return toDos.stream() .map(toDo -> modelMapper.map(toDo, ToDoDTO.class))
+                .collect(Collectors.toList()); // Use the fixed method
+    }
+
+    @Override
+    public List<ToDoDTO> getToDoByTitle(String title) throws ClassNotFoundException {
+        List<ToDo> toDos = toDoRepo.findAllByTitleEquals(title);
+        if(toDos.size() != 0) {
+            List<ToDoDTO> toDoDTOS = modelMapper.
+                    map(toDos, new TypeToken<List<ToDoDTO>>() {
+
+                    }.getType());
+            return toDoDTOS;
+        } else {
+            throw new ClassNotFoundException("no results");
+        }
+        }
+    }
+
+
